@@ -1,8 +1,3 @@
-// import Masonry from './modules/Masonry';
-import Glide from "@glidejs/glide";
-
-// const masonry = new Masonry();
-
 
 // Photos Filter by Tags
     jQuery(document).ready(function($) {
@@ -24,24 +19,10 @@ import Glide from "@glidejs/glide";
     });
     
     // Photos Slider @single-project page
-    function ProjectSlider() {
-        if (document.querySelector(".project-slider")) {
-            const dotCount = document.querySelectorAll(".project-slider__slide").length;
-    
-            let dotHTML = "";
-            for (let i = 0; i < dotCount; i++) {
-                dotHTML += `<button class="slider__bullet glide__bullet" data-glide-dir="=${i}"></button>`;
-            }
-    
-            document.querySelector(".glide__bullets").insertAdjacentHTML("beforeend", dotHTML);
-    
-            const glide = new Glide(".project-slider", {
-                type: "carousel",
-                perView: 1,
-                autoplay: 3000
-            });
-    
-            glide.mount();
-        }
-    }
+// $document.ready(() => {
+//     $(".slick").slick({
+//         infinite: true,
+//         dots: false,
+//     })
+// })
     
