@@ -10,10 +10,10 @@ function register_project_post_type() {
             'public' => true,
             'show_in_rest' => true,
             'labels' => array(
-                'name' => 'Projects',
+                'name' => 'プロジェクト',
                 'add_new_item' => 'Add New Project',
                 'edit_item' => 'Edit Project',
-                'all_items' => 'All Projects',
+                'all_items' => 'すべてのプロジェクト',
                 'singular_name' => 'Project'
             ),
             'menu_icon' => 'dashicons-portfolio'
@@ -24,7 +24,7 @@ function register_project_post_type() {
         'project-tag',
         'project',
         array(
-            'label' => 'Tag',
+            'label' => 'タグ',
             'rewrite' => array('slug' => 'example'),
             'hierarchical' => true,
         )
@@ -42,10 +42,10 @@ function register_news_post_type() {
             'public' => true,
             'show_in_rest' => true,
             'labels' => array(
-                'name' => 'News',
+                'name' => 'ニュース',
                 'add_new_item' => 'Add New News',
                 'edit_item' => 'Edit News',
-                'all_items' => 'All News',
+                'all_items' => 'すべてのニュース',
                 'singular_name' => 'News'
             ),
             'menu_icon' => 'dashicons-admin-site-alt3'
@@ -56,7 +56,7 @@ function register_news_post_type() {
         'news-tag',
         'news',
         array(
-            'label' => 'Tag',
+            'label' => 'タグ',
             'rewrite' => array('slug' => 'example'),
             'hierarchical' => true,
         )
