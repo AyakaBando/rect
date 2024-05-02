@@ -380,6 +380,8 @@ font-weight: 400;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 100;
 } 
 
 
@@ -393,7 +395,7 @@ font-weight: 400;
 }
 
 .group-one-field {
-  width: 71%;
+  width: 98%;
 }
 
 .description-design{

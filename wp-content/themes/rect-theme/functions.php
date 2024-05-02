@@ -127,6 +127,7 @@ function custom_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'custom_scripts' );
 
+// remove WP's automatic added html tags
 function wpautop_filter($content) {
     global $post;
     $remove_filter = false;
@@ -140,3 +141,19 @@ function wpautop_filter($content) {
     return $content;
     }
     add_action( 'wp_enqueue_scripts', 'wpautop_filter' );
+
+
+    // Add AJAX action for fetching product details
+    add_action('wp_ajax_get_product_details', 'get_product_details_callback');
+    add_action('wp_ajax_nopriv_get_product_details', 'get_product_details_callback');
+
+    function get_product_details_callback() {
+        if(isset($_POST['product_id'])) {
+            $product_id = intval($_POST['product_id']);
+            $product = get_post($product_id);
+            if($product && $product->post_type == 'project') {
+                echo '<h2>' . esc_html($product->post_title) . '</h2>';
+                echo '<div>' . apply_filters('the_content', $product->post_content) . '</div>';
+            };
+        };
+    };
