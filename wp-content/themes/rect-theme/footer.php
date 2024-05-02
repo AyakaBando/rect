@@ -11,8 +11,8 @@
         </div>
 
         <div class="footer-container__access">
-            <div class="contact"><a href="">&rarr; CONTACT</a></div>
-            <div class="access"><a href="">&rarr; ACCESS</a></div>
+            <div class="contact"><a href="/contact">&rarr; CONTACT</a></div>
+            <div class="access"><a href="/access">&rarr; ACCESS</a></div>
         </div>
 
         <div class="footer-container_sns">
@@ -29,6 +29,6 @@
 <?php wp_footer(); ?>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="slick/slick.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 <div class="main-pic">
     <!-- <img src="" alt="rect_logo"> -->
-    <p class="logo-over-main-pic">rect</p>
+    <p class="logo-over-main-pic">
+            <a href="<?php echo site_url(); ?>"><img src="http://rect.local/wp-content/uploads/2024/05/rect.gif"></a>
+        </p>
     <div class="main-container">
         <div class="main-pic__content" style="background-image: url(<?php echo get_theme_file_uri('/images/top-temp.png') ?>);">
         <!-- NEWS -->
@@ -55,7 +57,7 @@ get_header();
 </div>
 
 <!-- Projects -->
-<h4 class="title">Projects</h4>
+<h6 class="title">Projects</h4>
 
 <div class="projects-container">
     <?php 

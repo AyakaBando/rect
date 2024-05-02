@@ -19,10 +19,64 @@
     });
     
     // Photos Slider @single-project page
-// $document.ready(() => {
-//     $(".slick").slick({
-//         infinite: true,
-//         dots: false,
-//     })
-// })
+    document.addEventListener("DOMContentLoaded", function() {
+        const carouselTrack = document.querySelector('.carousel-track');
+        const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+        const slideWidth = slides[0].getBoundingClientRect().width;
+        let currentIndex = 0;
     
+        function goToSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            currentIndex = index;
+        }
+    
+        function nextSlide() {
+            const nextIndex = (currentIndex + 1) % slides.length;
+            goToSlide(nextIndex);
+        }
+    
+        function prevSlide() {
+            const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+            goToSlide(prevIndex);
+        }
+    
+        const nextButton = document.querySelector('.carousel-next');
+        const prevButton = document.querySelector('.carousel-prev');
+    
+        nextButton.addEventListener('click', nextSlide);
+        prevButton.addEventListener('click', prevSlide);
+    
+        // Show the first slide initially
+        goToSlide(0);
+    });
+
+// Projects grid layout change
+document.addEventListener("DOMContentLoaded", function() {
+    const threeColumnIcon = document.querySelector('.three-column');
+    const twoColumnIcon = document.querySelector('.two-column');
+    const projectsContainer = document.querySelector('.projects-container');
+    const projectImage = document.querySelectorAll('.wp-post-image');
+
+    threeColumnIcon.addEventListener('click', function() {
+        projectsContainer.classList.remove('grid-two-column');
+        projectsContainer.classList.add('grid-three-column');
+        projectImage.forEach(image => {
+            image.style.width = "30rem";
+            image.style.gap = "2rem";
+        });
+    });
+
+    twoColumnIcon.addEventListener('click', function() {
+        projectsContainer.classList.remove('grid-three-column');
+        projectsContainer.classList.add('grid-two-column');
+        projectImage.forEach(image => {
+            image.style.width = "45rem";
+        });
+    })
+})

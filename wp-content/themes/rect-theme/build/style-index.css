@@ -12,25 +12,34 @@ body {
 
 .footer-container, 
 .header-container {
-  width: 1536px;
-  margin: 0 auto;
+  /* width: 1536px; */
+  margin: 0 auto 4rem auto;
 }
 
 .header-container{
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
+  align-items: flex-end;
+  margin-top: 4rem;
 }
+
+
+.logo a img {
+  width: 60%;
+  height: auto;
+
+}
+
 
 .nav-menu{
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   flex-wrap: wrap;
+  align-items:baseline;
 }
 
 .nav-menu > li {
-  margin-right: 2rem;
+  margin-right: 2.5rem;
 }
 
 .nav-menu li a {
@@ -68,9 +77,17 @@ body {
 }
 
 .logo-over-main-pic{
-  margin: 0 !important;
+  /* margin: 0 !important; */
+  margin-left: 11rem;
+  margin-top: 3rem;
   position: absolute;
   z-index: 10;
+}
+
+.logo-over-main-pic a img {
+  color: #fff;
+  width: 60%;
+  height: auto;
 }
 
 .main-pic__content{
@@ -79,6 +96,7 @@ body {
   height: 80%;
   position: relative;
 }
+
 
 .news-container {
   position: absolute;
@@ -109,8 +127,45 @@ body {
 
 .title{
   text-align: center;
-  font-size: 2rem;
+  font-size: 1rem;
+  font-weight: 100;
+  text-transform: uppercase;
 }
+
+
+.view-all {
+  position: absolute;
+  right: 15rem;
+  margin-top: 3rem;
+}
+
+.view-all> a:hover{
+  text-decoration: underline;
+}
+
+.header-img {
+  display: block;
+  height: 400px;
+  background-image: url(../images/top-temp.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  object-fit: cover;
+}
+
+.header-title {
+  display: block;
+  text-align: center;
+  padding-top: 11rem;
+  padding-bottom: 11rem;
+  color: #fff;
+  font-size: 20px;
+  text-transform:uppercase;
+  line-height: 2;
+  font-weight: 100;
+}
+
+/* -------------------------- Projects -------------------------- */
 
 .projects-container {
   display: grid;
@@ -156,37 +211,21 @@ text-transform: capitalize;
 font-weight: 400;
 }
 
-.view-all {
-  position: absolute;
-  right: 15rem;
-  margin-top: 3rem;
+.grid-change {
+  display: flex;
+  margin-bottom: 1.5rem;
+  justify-content: space-around;
 }
 
-.view-all> a:hover{
-  text-decoration: underline;
+.grid-change > i {
+  color: #707070;
+  font-size: 1.8rem;
+  cursor: pointer;
 }
 
-.header-img {
-  display: block;
-  height: 400px;
-  background-image: url(../images/top-temp.png);
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: cover;
-  object-fit: cover;
+.grid-change > i:hover {
+  color: #ddd;
 }
-
-.header-title {
-  display: block;
-  text-align: center;
-  padding-top: 11rem;
-  padding-bottom: 11rem;
-  color: #fff;
-  font-size: 20px;
-  text-transform:uppercase;
-}
-
-/* -------------------------- Projects -------------------------- */
 
 .filter-container{
   display: grid;
@@ -194,12 +233,27 @@ font-weight: 400;
   align-items: start;
 }
 
-.filter-container > form {
+.grid-three-column {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+.grid-two-column {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.project-filter-form {
   width: 100%;
   margin-top: 3rem;
   padding-left: 5rem;
   line-height: 2.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
 
 .filter-container > form input[type=checkbox]{
   position: relative;
@@ -207,17 +261,47 @@ font-weight: 400;
   width: 18px;
   height: 18px;
   margin-top: -1px;
-  border-radius: 3px;
-  background-color: #ddd;
+  background-color: #fff;
+  border: #999999 solid 0.5px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   vertical-align: middle;
   transition: .3s;
+  margin-right: 0.5rem;
 }
 
 .filter-container > form input[type=checkbox]:checked {
   background: #000;
+}
+
+.filter-container > form > .project-filter > label:nth-child(3) {
+  margin-bottom: 3rem;
+}
+
+.filter-container > form > .project-filter > label:nth-child(5) {
+  margin-bottom: 3rem;
+}
+
+.filter-container > form > .project-filter > label:nth-child(7) {
+  margin-bottom: 3rem;
+}
+
+.project-filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+}
+
+.project-filter-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.project-filter-label:hover {
+  color: #ddd;
 }
 
 /* .filter-container > form input[type=checkbox]:checked::before {
@@ -244,6 +328,7 @@ font-weight: 400;
 .photo-content-area {
   width: 70%;
   margin: 5rem auto;
+  min-height: 100vh;
 }
 
 .single-project-container {
@@ -252,21 +337,51 @@ font-weight: 400;
   justify-content: space-around;
   line-height: 2.5;
   margin-top: 5rem;
-
-}
-
-.single-project-pic {
-  /* margin-right: 3rem;
-  width: 100%; */
-}
-
-.single-project-pic .slider-pic {
-  width: 33%;
-}
-
-.single-project-pic img {
   width: 100%;
+
 }
+
+.dingle-project-pic {
+  display: flex;
+  flex-direction: row;
+}
+
+.carousel {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+  flex: 0 0 auto;
+  display: none;
+  width: 100%;
+  height: auto;
+}
+
+.active {
+  display: block;
+}
+
+.carousel-slide img {
+  width: 920px;
+  height: 590px;
+  object-fit:contain;
+}
+
+.carousel-prev, .carousel-next {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} 
+
 
 .description-container {
   display: flex;
@@ -274,6 +389,7 @@ font-weight: 400;
   justify-content: space-around;
   font-size: 0.7rem;
   flex-wrap: wrap;
+  width: 24%;
 }
 
 .group-one-field {
@@ -383,13 +499,16 @@ font-weight: 400;
 #first > .first-title{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   text-align: center;
+  font-size: 1.5rem;
 }
 
 #first > .first-content{
   display: flex;
-  width: 50%;
+  width: 40%;
+  line-height: 2;
+  letter-spacing: 0.13rem;
 }
 
 @media screen and (max-width:1279px){

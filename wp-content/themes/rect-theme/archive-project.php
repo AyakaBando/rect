@@ -3,12 +3,21 @@ get_header();
 ?>
 
 <div class="header-img">
-    <p class="header-title"><?php post_type_archive_title(); ?></p>
+    <h1 class="header-title"><?php post_type_archive_title(); ?></h1>
 </div>
 
 <div class="filter-container">
+
+
+<form method="get" class="project-filter-form">
+    <div class="grid-change">
+        <i class="fa fa-th three-column" aria-hidden="true"></i>
+        <i class="fa fa-th-large two-column" aria-hidden="true"></i>
+    </div>
     
-<form method="get">
+    <div class="project-filter">
+
+
         <?php
         $tags = get_terms(array(
             'taxonomy' => 'project-tag',
@@ -19,14 +28,15 @@ get_header();
         if ($tags) :
             foreach ($tags as $tag) :
         ?>
-                <label>
+                <label class="project-filter-label">
                 <input type="checkbox" name="tags[]" value="<?php echo esc_attr($tag->slug); ?>" <?php if(isset($_GET['tags']) && in_array($tag->slug, $_GET['tags'])) echo 'checked'; ?>>
                     <?php echo esc_html($tag->name); ?>
-                </label><br>
+                </label>
         <?php
             endforeach;
         endif;
         ?>
+            </div>
         <button type="submit" class="search-btn">検索</button>
     </form>
 

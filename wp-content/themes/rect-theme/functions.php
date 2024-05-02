@@ -127,14 +127,16 @@ function custom_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'custom_scripts' );
 
-function enqueue_slick_scripts() {
-    // Enqueue Slick CSS
-    wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css');
-
-    // Enqueue Slick theme CSS (optional)
-    wp_enqueue_style('slick-theme-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css');
-
-    // Enqueue Slick JS
-    // wp_enqueue_script('slick-js', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js', array('jquery'), null, true);
-}
-add_action('wp_enqueue_scripts', 'enqueue_slick_scripts');
+function wpautop_filter($content) {
+    global $post;
+    $remove_filter = false;
+    $arr_types = array('project');
+    $post_type = get_post_type( $post->ID );
+    if (in_array($post_type, $arr_types)) $remove_filter = true;
+    if ( $remove_filter ) {
+    remove_filter('the_content', 'wpautop');
+    remove_filter('the_excerpt', 'wpautop');
+    }
+    return $content;
+    }
+    add_action( 'wp_enqueue_scripts', 'wpautop_filter' );
