@@ -87,14 +87,33 @@ get_header();
         <p>投稿がありません。</p>
     <?php endif; 
     wp_reset_postdata(); ?>
-</div>
 
-</div>
 <div class="view-all">
     <a href="./projects/">
         View All Projects
     </a>
 </div>
+</div>
+
+
+
+<!-- PRODUCTS -->
+<h6 class="title">Products</h4>
+<div class="products-container"></div>
+
+<!-- ABOUTUS -->
+<h6 class="title">About Us</h4>
+<div class="aboutus-container">
+    <div class="person1">
+        <div class="history"></div>
+        <div class="portrait"></div>
+    </div>
+    <div class="person2">
+        <div class="history"></div>
+        <div class="portrait"></div>
+    </div>
+</div>
+
 
 
 <!-- Footer -->

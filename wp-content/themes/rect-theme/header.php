@@ -33,7 +33,7 @@
 
             <li <?php if (is_page('about-us') or wp_get_post_parent_id(get_the_id(0)) == 12)
                     echo 'class="current-menu-item"' ?>>
-                    <a href="<?php echo site_url('/contact'); ?>"><span>CONTACTS</span><span>お問い合わせ</span></a>
+                    <a href="<?php echo site_url('/contact'); ?>"><span>CONTACT</span><span>お問い合わせ</span></a>
             </li>
 
             <li <?php if (is_page('about-us') or wp_get_post_parent_id(get_the_id(0)) == 12)
