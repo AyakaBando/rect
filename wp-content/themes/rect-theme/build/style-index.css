@@ -165,6 +165,10 @@ body {
   font-weight: 100;
 }
 
+.page-container {
+
+}
+
 /* -------------------------- Projects -------------------------- */
 
 .projects-container {
@@ -327,7 +331,7 @@ font-weight: 400;
 }
 
 .photo-content-area {
-  width: 70%;
+  width: 90%;
   margin: 5rem auto;
   min-height: 100vh;
 }
@@ -404,6 +408,13 @@ font-weight: 400;
 }
 
 /* -------------------------- Photos -------------------------- */
+.page-title{
+  display:inline-block;
+  margin-left: 6rem;
+  position:absolute;
+  text-transform: uppercase;
+}
+
 .custom-gallery {
   column-count: 3;
   gap: 3rem;

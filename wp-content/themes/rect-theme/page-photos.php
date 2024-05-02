@@ -2,9 +2,13 @@
 get_header();
 ?>
 
-<div class="header-img">
+<!-- <div class="header-img">
     <p class="header-title"><?php the_title(); ?></p>
-</div>
+</div> -->
+<div class="page-container">
+    <div class="page-title">
+        <?php the_title(); ?>
+    </div>
 
 <?php
 $args = array(
@@ -94,6 +98,7 @@ if ($query->have_posts()) : ?>
         echo '</div>'; // .entry-content
         ?>
     </main>
+</div>
 </div>
 
 <?php endif; ?>

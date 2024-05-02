@@ -1,7 +1,11 @@
 <?php
 get_header();
 ?>
-<?php the_title(); ?>
+
+<div class="page-title">
+    <?php the_title(); ?>
+</div>
+
 <?php 
 get_footer();
 ?>
