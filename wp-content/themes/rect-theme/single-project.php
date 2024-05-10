@@ -32,6 +32,7 @@
                 </div>
             </div>
         <?php else :
+        $clicked_image_id = isset($_GET['image_id']) ? intval($_GET['image_id']) : 0
             ?>
             <div class="wp-block-group single-project-pic project-slider">
             <div class="carousel">   
@@ -41,16 +42,24 @@
                     </svg>
                     <div class="single-carousel-image">
 
-                        <?php
-                    $images = get_attached_media('image', get_the_ID());
-                    foreach ($images as $index => $image) {
-                        $image_url = add_query_arg('image_id', $image->ID, get_permalink());
-                    ?>
-                        <div class="carousel-slide php echo $index === 0 ? 'active' : ''; ?>">
-                                <?php echo wp_get_attachment_image($image->ID, 'large'); ?>
-                        </div>
-                    <?php } ?>
-                    ?>
+                    <?php
+                        // Output the clicked image first
+                        echo '<div class="carousel-slide active">';
+                        echo wp_get_attachment_image($clicked_image_id, 'large');
+                        echo '</div>';
+
+                        // Load the rest of the images into the carousel
+                        $images = get_attached_media('image', get_the_ID());
+                        foreach ($images as $image) {
+                            // Skip the clicked image
+                            if ($image->ID === $clicked_image_id) {
+                                continue;
+                            }
+                            echo '<div class="carousel-slide">';
+                            echo wp_get_attachment_image($image->ID, 'large');
+                            echo '</div>';
+                        }
+                        ?>
 
                     
                     </div>
