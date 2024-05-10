@@ -129,24 +129,21 @@ add_action( 'wp_enqueue_scripts', 'custom_scripts' );
 
 // remove WP's automatic added html tags
 function wpautop_filter($content) {
-    global $post;
-    $remove_filter = false;
-    $arr_types = array('project');
-    $post_type = get_post_type( $post->ID );
-    if (in_array($post_type, $arr_types)) $remove_filter = true;
-    if ( $remove_filter ) {
-    remove_filter('the_content', 'wpautop');
-    remove_filter('the_excerpt', 'wpautop');
+    if (is_singular('project')) {
+        remove_filter('the_content', 'wpautop');
+        remove_filter('the_excerpt', 'wpautop');
     }
     return $content;
-    }
-    add_action( 'wp_enqueue_scripts', 'wpautop_filter' );
+}
+add_filter('the_content', 'wpautop_filter', 9); // Hook into the_content filter with priority 9
+add_filter('the_excerpt', 'wpautop_filter', 9); // Hook into the_excerpt filter with priority 9
+
 
 
     // Add AJAX action for fetching product details
     add_action('wp_ajax_get_product_details', 'get_product_details_callback');
     add_action('wp_ajax_nopriv_get_product_details', 'get_product_details_callback');
-
+    
     function get_product_details_callback() {
         if(isset($_POST['product_id'])) {
             $product_id = intval($_POST['product_id']);
@@ -157,3 +154,25 @@ function wpautop_filter($content) {
             };
         };
     };
+
+    // Delete border on the gallery
+    add_filter( 'gallery_style', 'gallery_border_none');
+    function gallery_border_none($style){
+    return str_replace('border: 2px solid #cfcfcf;', 'border: none;',$style );
+    }
+
+// Code for themes
+add_action( 'after_switch_theme', 'flush_rewrite_rules' );
+
+function custom_rewrite_rule() {
+    add_rewrite_rule('^project-details/([^/]*)/?','index.php?pagename=single-project-details&image_id=$matches[1]','top');
+}
+add_action('init', 'custom_rewrite_rule');
+
+// Flush rewrite rules on plugin/theme activation
+function custom_flush_rewrite_rules() {
+    custom_rewrite_rule(); // Add the rewrite rules
+    flush_rewrite_rules(); // Flush the rules once
+}
+register_activation_hook( __FILE__, 'custom_flush_rewrite_rules' );
+

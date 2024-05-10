@@ -91,7 +91,7 @@ $my_query = new WP_Query($args);
     else :
         // Display message if no projects found
         ?>
-        <p>No projects found.</p>
+        <p>プロジェクトはまだありません。</p>
     <?php
     endif;
 

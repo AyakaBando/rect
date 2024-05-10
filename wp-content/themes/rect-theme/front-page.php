@@ -68,7 +68,7 @@ get_header();
     ];
     $my_query = new WP_Query($args); 
     
-    if ($my_query->have_posts()) : // Corrected to use $my_query
+    if ($my_query->have_posts()) : 
         while ($my_query->have_posts()) : $my_query->the_post(); ?>
             <div class="projects">
                 <div class="post_thumbnail">
@@ -99,7 +99,30 @@ get_header();
 
 <!-- PRODUCTS -->
 <h6 class="title">Products</h4>
-<div class="products-container"></div>
+<div class="products-container">
+<?php 
+    $args = [
+        'post_type' => 'product',
+        'posts_per_page' => 4,
+        'orderby' => 'DESC',
+    ];
+    $my_query = new WP_Query($args); 
+    
+    if ($my_query->have_posts()) : 
+        while ($my_query->have_posts()) : $my_query->the_post(); ?>
+            <div class="products">
+                <div class="product_thumbnail">
+                    <?php if (has_post_thumbnail()) : ?>
+                            <?php the_post_thumbnail('full'); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endwhile; 
+    else: ?>
+        <p>投稿がありません。</p>
+    <?php endif; 
+    wp_reset_postdata(); ?>
+</div>
 
 <!-- ABOUTUS -->
 <h6 class="title">About Us</h4>

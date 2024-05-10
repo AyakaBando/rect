@@ -5,6 +5,7 @@ get_header();
 <!-- <div class="header-img">
     <p class="header-title"><?php the_title(); ?></p>
 </div> -->
+
 <div class="page-container">
     <div class="page-title">
         <?php the_title(); ?>

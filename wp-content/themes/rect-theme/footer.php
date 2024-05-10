@@ -30,5 +30,49 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+    // mouseover event
+// Define the mouseOver function
+// function mouseOver() {
+//     let singleCarouselImage = document.querySelector('.single-carousel-image');
+
+//     if (singleCarouselImage) {
+//         singleCarouselImage.addEventListener("mouseover", function() {
+//             singleCarouselImage.classList.add("dot");
+//             let dot = document.querySelector('.dot');
+
+//             if (dot) {
+//                 dot.style.display = 'block';
+//                 dot.style.width = "200px";
+//                 dot.style.height = "200px";
+//                 dot.style.backgroundColor = "red";
+//                 dot.style.borderRadius = "50%";
+//                 dot.style.zIndex = "1000";
+//             }
+
+//             console.log('successfully entered picture');
+//         });
+//     }
+// }
+
+// // Define the mouseLeave function
+// function mouseLeave() {
+//     let singleCarouselImage = document.querySelector('.single-carousel-image');
+//     if (singleCarouselImage) {
+//         singleCarouselImage.addEventListener("mouseleave", function() {
+//             let dot = document.querySelector('.dot');
+//             if (dot) {
+//                 dot.style.display = 'none'; 
+//             }
+//             singleCarouselImage.classList.remove('dot');
+//         });
+//     }
+// }
+
+// mouseOver();
+// mouseLeave();
+
+
+</script>
 </body>
 </html>

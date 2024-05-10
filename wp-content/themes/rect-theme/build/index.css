@@ -20,8 +20,12 @@ time, mark, audio, video {
 }
 
 body {
-    font-family: "Ubuntu", sans-serif;
+    font-family: "ryo-gothic-plusn", sans-serif;
     line-height:1;
+    background-image: url(../images/background.png);
+    background-repeat: repeat;
+    z-index: -1;
+    letter-spacing: 0.1rem;
 }
 
 article,aside,details,figcaption,figure,
