@@ -72,6 +72,41 @@
 // mouseOver();
 // mouseLeave();
 
+// Carousel
+document.addEventListener("DOMContentLoaded", function() {
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const prevButton = document.querySelector('.carousel-prev');
+    const nextButton = document.querySelector('.carousel-next');
+
+    let slideWidth = slides[0].getBoundingClientRect().width;
+
+    // Arrange slides next to each other
+    slides.forEach((slide, index) => {
+        slide.style.left = slideWidth * index + 'px';
+    });
+
+    // Function to move slides
+    const moveToSlide = (currentSlide, targetSlide) => {
+        track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+        currentSlide.classList.remove('active');
+        targetSlide.classList.add('active');
+    };
+
+    // Move to the next slide
+    nextButton.addEventListener('click', () => {
+        const currentSlide = track.querySelector('.active');
+        const nextSlide = currentSlide.nextElementSibling;
+        moveToSlide(currentSlide, nextSlide);
+    });
+
+    // Move to the previous slide
+    prevButton.addEventListener('click', () => {
+        const currentSlide = track.querySelector('.active');
+        const prevSlide = currentSlide.previousElementSibling;
+        moveToSlide(currentSlide, prevSlide);
+    });
+});
 
 </script>
 </body>
