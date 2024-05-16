@@ -361,7 +361,15 @@ font-weight: 400;
   line-height: 2.5;
   margin-top: 5rem;
   width: 100%;
+}
 
+.expand-arrow > img {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 10rem;
+  left: 12rem;
+  z-index: 10;
 }
 
 .carousel {
@@ -447,7 +455,7 @@ font-weight: 400;
 }
 
 .single-project-details {
-  padding: 0 3rem 0 3rem;
+  padding: 3rem 3rem 0 3rem;
 }
 
 .project-title {

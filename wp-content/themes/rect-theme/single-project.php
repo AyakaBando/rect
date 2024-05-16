@@ -35,6 +35,9 @@
         $clicked_image_id = isset($_GET['image_id']) ? intval($_GET['image_id']) : 0
             ?>
             <div class="wp-block-group single-project-pic project-slider">
+                <a href="" class="expand-arrow">
+                    <img src="http://rect.local/wp-content/uploads/2024/05/arrow-expand.png" alt="" >
+                </button>
             <div class="carousel">   
                 <div class="carousel-track">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width=".5" stroke="#707070" class="w-4 h-4 carousel-prev" width="50">
