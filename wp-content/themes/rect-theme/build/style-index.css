@@ -368,8 +368,9 @@ font-weight: 400;
   height: 30px;
   position: absolute;
   top: 10rem;
-  left: 12rem;
+  left: 4rem;
   z-index: 10;
+  cursor: pointer;
 }
 
 .carousel {
