@@ -15,8 +15,8 @@
             <div class="access"><a href="/access">&rarr; ACCESS</a></div>
         </div>
 
-        <div class="footer-container_sns">
-        <i class="fa fa-instagram" aria-hidden="true"><a href=""></a></i>
+        <div class="footer-container__sns">
+        <i class="fa fa-instagram" aria-hidden="true"><a href="#"></a></i>
         </div>
 
         <div class="footer-container_privacy">

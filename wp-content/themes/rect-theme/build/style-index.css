@@ -451,7 +451,6 @@ font-weight: 400;
 
 .custom-project-gallery {
   column-count: 2;
-  gap: 3rem;
 }
 
 .single-project-details {
@@ -466,6 +465,76 @@ font-weight: 400;
 .project-description {
   margin-top: 3rem;
   font-size: 0.7rem;
+}
+
+.product-hotspots-container {
+  margin-top: 5rem;
+}
+
+.product-hotspots-container > img {
+  width: 20%;
+  height: auto;
+}
+
+/* hotspot */
+
+.image-hotspots-container {
+  display: flex;
+  gap: 3rem;
+}
+
+.product-info > .product-description > pre {
+  font-family: "ryo-gothic-plusn", sans-serif;
+  font-size: 0.8rem;
+}
+
+.product-info {
+  /* display: none; */
+  display:flex;
+  align-items: center;
+}
+
+/* .product-info.active {
+  display:flex;
+  width: 100%;
+  align-items: center;
+} */
+
+.product-description {
+  margin-left: 3rem;
+  height:100%;
+  line-height: 2rem;
+}
+
+.image-hotspots {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.hotspot {
+  position: absolute;
+  cursor: pointer;
+}
+
+.hotspot .dot {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.product-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.product-dot.active {
+  background-color: green;
 }
 
 /* .dot {
@@ -554,6 +623,14 @@ font-weight: 400;
 .footer-container__access{
   display: flex;
   flex-direction: column;
+}
+
+.footer-container__ sns {
+  cursor: pointer;
+}
+
+.footer-container__sns > .fa {
+  font-size: 20px;
 }
 
 .contact{
