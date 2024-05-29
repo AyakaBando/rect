@@ -186,13 +186,3 @@ function render_project_images_hotspots_meta_box($post) {
     <textarea id="project_images_hotspots" name="project_images_hotspots" rows="10" cols="50"><?php echo esc_textarea($value); ?></textarea>
     <?php
 }
-
-// Enqueue scripts and styles in admin
-function project_images_hotspots_admin_scripts($hook_suffix) {
-    global $post_type;
-    if ($post_type === 'project') {
-        wp_enqueue_media();
-        wp_enqueue_script('project-images-hotspots', get_template_directory_uri() . '/src/project-images-hotspots.js', array('jquery'), null, true);
-    }
-}
-add_action('admin_enqueue_scripts', 'project_images_hotspots_admin_scripts');
