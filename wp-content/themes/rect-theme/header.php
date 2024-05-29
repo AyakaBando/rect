@@ -38,7 +38,7 @@
 
             <li <?php if (is_page('about-us') or wp_get_post_parent_id(get_the_id(0)) == 12)
                     echo 'class="current-menu-item"' ?>>
-                    <a href="<?php echo site_url('/photo'); ?>"><span>PHOTOS</span><span>写真</span></a>
+                    <a href="<?php echo site_url('/photos'); ?>"><span>PHOTOS</span><span>写真</span></a>
             </li>
 
             <li <?php if (is_page('about-us') or wp_get_post_parent_id(get_the_id(0)) == 12)

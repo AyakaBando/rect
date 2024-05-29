@@ -356,7 +356,6 @@ font-weight: 400;
 
 .single-project-images {
   display: block;
-  height: 200px;
   width: 100%;
 }
 
@@ -499,7 +498,6 @@ font-weight: 400;
   gap: 3rem;
   /* position: relative; */
   width: 100%;
-  height: auto;
 }
 
 .image-hotspots-container img {
@@ -514,16 +512,16 @@ font-weight: 400;
 }
 
 .product-info {
-  display: none;
-  /* display:flex;
-  align-items: center; */
+  /* display: none; */
+  display:flex;
+  align-items: center;
 }
 
 .product-info.active {
-  /* display:flex;
+  display:flex;
   width: 100%;
-  align-items: center; */
-  display: block;
+  align-items: center;
+  /* display: block; */
 }
 
 .product-description {
@@ -540,9 +538,9 @@ font-weight: 400;
 
 .hotspot {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: red;
+  width: 13px;
+  height: 13px;
+  background-color: #fff;
   border-radius: 50%;
   cursor: pointer;
 }
