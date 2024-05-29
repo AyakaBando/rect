@@ -76,7 +76,9 @@
                             $hotspots = $data['hotspots'];
                     ?>
                             <div class="image-hotspots-container" data-image-id="<?php echo esc_attr($image_id); ?>" data-hotspots='<?php echo json_encode($hotspots); ?>'>
+                            </div>
 
+                            <div class="product-container" data-image-id="<?php echo esc_attr($image_id); ?>">
                                 <?php foreach ($hotspots as $hotspot) :
                                     $product_id = $hotspot['product'];
                                     if ($product_id) : ?>
@@ -92,22 +94,23 @@
                                                 <?php if (!empty($product_description)) : ?>
                                                     <pre><?php echo esc_html(strip_tags($product_description)); ?></pre>
                                                 <?php endif; ?>
-                                            </div>
+                                        </div>
                                         </div>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </div>
-                    <?php
+                </div>
+        <?php
                         endforeach;
                     endif;
-                    ?>
+        ?>
 
-                </div>
+</div>
 
-                <!-- End Hotspot Functionality -->
+<!-- End Hotspot Functionality -->
 
-            <?php endif; ?>
-    <?php endwhile;
+<?php endif; ?>
+<?php endwhile;
     endif; ?>
 </div>
 

@@ -506,10 +506,17 @@ font-weight: 400;
   height: auto;
 }
 
-.product-info > .product-description > pre {
-  font-family: "ryo-gothic-plusn", sans-serif;
-  font-size: 0.8rem;
+.product-container {
+  margin-left: 7.5rem;
+  gap: 2rem;
+  margin-top: 2rem;
 }
+
+.products{
+  display: flex;
+  justify-content: space-between;
+}
+
 
 .product-info {
   /* display: none; */
@@ -517,10 +524,18 @@ font-weight: 400;
   align-items: center;
 }
 
+.product-info > .product-description > pre {
+  font-family: "ryo-gothic-plusn", sans-serif;
+  font-size: 0.8rem;
+}
+
+
+
+
 .product-info.active {
-  display:flex;
+  /* display:flex;
   width: 100%;
-  align-items: center;
+  align-items: center; */
   /* display: block; */
 }
 

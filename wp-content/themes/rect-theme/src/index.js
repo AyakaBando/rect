@@ -65,14 +65,39 @@ document.addEventListener("DOMContentLoaded", function () {
   function handleSlideChange(currentSlideIndex) {
     const currentSlide = slides[currentSlideIndex];
     const currentSlideImageId = currentSlide.getAttribute("data-image-id");
-
+  
     console.log(
       "Slide changed to:",
       currentSlideIndex,
       "Image ID:",
       currentSlideImageId
     );
-
+  
+    const productContainers = document.querySelectorAll(".product-container");
+    productContainers.forEach((productContainer) => {
+      const imageId = productContainer.getAttribute("data-image-id");
+      if (imageId === currentSlideImageId) {
+        // Show product container for the matching image
+        productContainer.style.display = "flex";
+        // Check if this project contains specific products
+        // const productIds = getProductIdsForProject(imageId);
+        // if (productIds.length > 0) {
+        //   const products = productContainer.querySelectorAll(".product-info");
+        //   products.forEach((productInfo) => {
+        //     const productId = productInfo.getAttribute("data-product-id");
+        //     if (productIds.includes(productId)) {
+        //       productInfo.style.display = "block";
+        //     } else {
+        //       productInfo.style.display = "none";
+        //     }
+        //   });
+        // }
+      } else {
+        // Hide product container for non-matching images
+        productContainer.style.display = "none";
+      }
+    });
+  
     const hotspotContainers = document.querySelectorAll(
       ".image-hotspots-container"
     );
@@ -91,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
+  
   slides.forEach((slide, index) => {
     slide.addEventListener("transitionend", () => {
       if (slide.classList.contains("active")) {
@@ -139,9 +164,9 @@ window.addEventListener("load", () => {
       image.addEventListener("load", () => {
         handleSlideChange(index);
       });
-      if (image.complete) {
-        handleSlideChange(index);
-      }
+      // if (image.complete) {
+      //   handleSlideChange(index);
+      // }
     }
   });
 });
