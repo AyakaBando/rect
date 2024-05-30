@@ -384,21 +384,30 @@ font-weight: 400;
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease;
   margin: 0 2rem;
+  position: relative;
+}
+
+.single-carousel-image {
+  /* position: relative; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .carousel-slide {
-  flex: 0 0 auto;
+  /* flex: 0 0 auto; */
   display: none;
-  width: 100%;
-  height: auto;
+  /* width: 100%; */
+  position: relative;
 }
+
 
 .carousel-slide.active {
   display: block;
@@ -443,6 +452,7 @@ font-weight: 400;
   flex-wrap: wrap;
   width: 100%;
   margin-top: 3rem;
+  margin-left: 2rem;
 }
 
 .description-container > p {
@@ -468,7 +478,7 @@ font-weight: 400;
 }
 
 .single-project-details {
-  padding: 3rem 3rem 0 3rem;
+  padding: 3rem 5rem 0 5rem;
 }
 
 .project-title {
@@ -493,11 +503,35 @@ font-weight: 400;
 
 /* hotspot */
 
+.hotspot {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.hotspot:hover {
+  background-color: #fff;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  opacity: 0.4;
+  z-index: 1;
+}
+
+
 .image-hotspots-container {
   display: flex;
   gap: 3rem;
-  /* position: relative; */
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  cursor: default;
 }
 
 .image-hotspots-container img {
@@ -507,7 +541,7 @@ font-weight: 400;
 }
 
 .product-container {
-  margin-left: 7.5rem;
+  margin-left: 5rem;
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -545,27 +579,11 @@ font-weight: 400;
   line-height: 2rem;
 }
 
-.image-hotspots {
+/* .image-hotspots {
   position: relative;
   margin-bottom: 20px;
-}
+} */
 
-
-.hotspot {
-  position: absolute;
-  width: 13px;
-  height: 13px;
-  background-color: #fff;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.hotspot .dot {
-  width: 10px;
-  height: 10px;
-  background-color: #fff;
-  border-radius: 50%;
-}
 
 .product-dot {
   position: absolute;

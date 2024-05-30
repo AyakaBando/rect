@@ -1,4 +1,4 @@
-// Photos Filter by Tags
+// ------------------------------------------------------- Photos Filter by Tags -------------------------------------------------------
 jQuery(document).ready(function ($) {
   $(".filter-button").on("click", function () {
     const selectedTag = $(this).data("tag");
@@ -16,162 +16,127 @@ jQuery(document).ready(function ($) {
   });
 });
 
-// Functionality for carousel and hotspots
+// ------------------------------------------------------- Functionality for carousel and hotspots -------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOM fully loaded and parsed");
-
   const carouselTrack = document.querySelector(".carousel-track");
   let currentIndex = 0;
   const slides = Array.from(document.querySelectorAll(".carousel-slide"));
+  const productContainers = document.querySelectorAll(".product-container");
 
   function goToSlide(index) {
-    console.log("Going to slide:", index);
-    slides.forEach((slide, i) => {
-      const productInfo = slide.querySelector(".product-info");
-      if (i === index) {
-        slide.classList.add("active");
-        slide.style.display = "block";
-        if (productInfo) productInfo.style.display = "block";
-      } else {
-        slide.classList.remove("active");
-        slide.style.display = "none";
-        if (productInfo) productInfo.style.display = "none";
-      }
-    });
-    currentIndex = index;
-    handleSlideChange(index);
+      slides.forEach((slide, i) => {
+          if (i === index) {
+              slide.classList.add("active");
+              slide.style.display = "block";
+              addHotspotsForImage(slide);
+              handleSlideChange(index);
+          } else {
+              slide.classList.remove("active");
+              slide.style.display = "none";
+          }
+      });
+      currentIndex = index;
   }
 
   function nextSlide() {
-    const nextIndex = (currentIndex + 1) % slides.length;
-    console.log("Next slide:", nextIndex);
-    goToSlide(nextIndex);
+      const nextIndex = (currentIndex + 1) % slides.length;
+      goToSlide(nextIndex);
   }
 
   function prevSlide() {
-    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-    console.log("Previous slide:", prevIndex);
-    goToSlide(prevIndex);
+      const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+      goToSlide(prevIndex);
   }
 
   const nextButton = document.querySelector(".carousel-next");
   const prevButton = document.querySelector(".carousel-prev");
 
-  nextButton?.addEventListener("click", nextSlide);
-  prevButton?.addEventListener("click", prevSlide);
+  if (nextButton) {
+      nextButton.addEventListener("click", nextSlide);
+  }
+
+  if (prevButton) {
+      prevButton.addEventListener("click", prevSlide);
+  }
 
   goToSlide(0);
 
+  // ------------------------------------------------------- Carousel -------------------------------------------------------
   function handleSlideChange(currentSlideIndex) {
     const currentSlide = slides[currentSlideIndex];
     const currentSlideImageId = currentSlide.getAttribute("data-image-id");
-  
-    console.log(
-      "Slide changed to:",
-      currentSlideIndex,
-      "Image ID:",
-      currentSlideImageId
-    );
-  
-    const productContainers = document.querySelectorAll(".product-container");
+
     productContainers.forEach((productContainer) => {
-      const imageId = productContainer.getAttribute("data-image-id");
-      if (imageId === currentSlideImageId) {
-        // Show product container for the matching image
-        productContainer.style.display = "flex";
-        // Check if this project contains specific products
-        // const productIds = getProductIdsForProject(imageId);
-        // if (productIds.length > 0) {
-        //   const products = productContainer.querySelectorAll(".product-info");
-        //   products.forEach((productInfo) => {
-        //     const productId = productInfo.getAttribute("data-product-id");
-        //     if (productIds.includes(productId)) {
-        //       productInfo.style.display = "block";
-        //     } else {
-        //       productInfo.style.display = "none";
-        //     }
-        //   });
-        // }
-      } else {
-        // Hide product container for non-matching images
-        productContainer.style.display = "none";
-      }
+        const imageId = productContainer.getAttribute("data-image-id");
+        if (imageId === currentSlideImageId) {
+            productContainer.style.display = "flex";
+        } else {
+            productContainer.style.display = "none";
+        }
     });
-  
-    const hotspotContainers = document.querySelectorAll(
-      ".image-hotspots-container"
-    );
-    hotspotContainers.forEach((hotspotContainer) => {
-      const imageId = hotspotContainer.getAttribute("data-image-id");
-      if (imageId === currentSlideImageId) {
-        // Show hotspots for the matching image
-        hotspotContainer.style.display = "block";
-        addHotspotsForImage(
-          imageId,
-          JSON.parse(hotspotContainer.getAttribute("data-hotspots"))
-        );
-      } else {
-        // Hide hotspots for non-matching images
-        hotspotContainer.style.display = "none";
-      }
-    });
-  }
-  
-  slides.forEach((slide, index) => {
-    slide.addEventListener("transitionend", () => {
-      if (slide.classList.contains("active")) {
-        handleSlideChange(index);
-      }
-    });
-  });
-});
-
-function addHotspotsForImage(imageId, hotspots) {
-  console.log("Adding hotspots for image:", imageId, hotspots);
-
-  // Find the hotspot container for the current image ID
-  const hotspotContainer = document.querySelector(
-    `.image-hotspots-container[data-image-id="${imageId}"]`
-  );
-
-  if (hotspotContainer) {
-    // Clear existing hotspots
-    hotspotContainer.innerHTML = "";
-
-    // Add hotspots for the current image
-    hotspots.forEach((hotspot) => {
-      const { product, x_position, y_position } = hotspot;
-      const hotspotHtml = `
-              <div class="hotspot" data-product-id="${product}" style="left:${x_position}%; top:${y_position}%;"></div>
-          `;
-      hotspotContainer.insertAdjacentHTML("beforeend", hotspotHtml);
-    });
-    console.log(
-      "Hotspot container HTML after adding hotspots:",
-      hotspotContainer.innerHTML
-    );
-  } else {
-    console.warn(`Hotspot container not found for image ID: ${imageId}`);
-  }
 }
 
-// Ensure hotspots are added after images are fully loaded
+slides.forEach((slide, index) => {
+    slide.addEventListener("transitionend", () => {
+        if (slide.classList.contains("active")) {
+            handleSlideChange(index);
+        }
+    });
+});
+
+  function addHotspotsForImage(slide) {
+    console.log(slide);
+    const imageId = slide.getAttribute("data-image-id");
+    const hotspotContainer = slide.querySelector(".image-hotspots-container");
+
+    if (hotspotContainer) {
+      const hotspots = JSON.parse(
+        hotspotContainer.getAttribute("data-hotspots")
+      );
+      hotspotContainer.innerHTML = "";
+
+      hotspots.forEach((hotspot) => {
+        const { product, x_position, y_position } = hotspot;
+        const hotspotElement = document.createElement("div");
+        hotspotElement.classList.add("hotspot");
+        hotspotElement.dataset.productId = product;
+        hotspotElement.style.left = `${x_position}%`;
+        hotspotElement.style.top = `${y_position}%`;
+        hotspotContainer.appendChild(hotspotElement);
+      });
+
+    hotspotContainer.addEventListener("mouseover", () => {
+      hotspotContainer.querySelectorAll(".hotspot").forEach((hotspot) => {
+        hotspot.style.display = "block";
+      });
+    });
+
+     hotspotContainer.addEventListener("mouseout", () => {
+      hotspotContainer.querySelectorAll(".hotspot").forEach((hotspot) => {
+        hotspot.style.display = "none";
+      });
+    });
+    } else {
+      console.warn(`Hotspot container not found for image ID: ${imageId}`);
+    }
+  }
+});
+
 window.addEventListener("load", () => {
   const slides = document.querySelectorAll(".carousel-slide");
   slides.forEach((slide, index) => {
     const image = slide.querySelector("img");
     if (image) {
       image.addEventListener("load", () => {
-        handleSlideChange(index);
+        if (slide.classList.contains("active")) {
+          addHotspotsForImage(slide);
+        }
       });
-      // if (image.complete) {
-      //   handleSlideChange(index);
-      // }
     }
   });
 });
 
-// Projects grid layout change
+// ------------------------------------------------------- Projects grid layout change -------------------------------------------------------
 function setupColumnIcons() {
   const threeColumnIcon = document.querySelector(".three-column");
   const twoColumnIcon = document.querySelector(".two-column");
