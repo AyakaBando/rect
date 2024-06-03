@@ -1,0 +1,47 @@
+#hotspots-image {
+    width: 400px;
+    height: auto;
+    margin-top: 1rem;
+}
+
+#hotspot-interface {
+    width: 400px;
+    height: auto;
+}
+
+#hotspot-interface {
+    position: relative;
+}
+
+.hotspot {
+position: absolute;
+width: 10px;
+height: 10px;
+background-color:red;
+border-radius: 50%;
+cursor: pointer;
+}
+
+#hotspot-positions {
+    display: flex;
+    flex-direction: column;
+    width: 21%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+input[type=range] {
+    width: 15rem;
+}
+
+.hotspot-range {
+    width: 100%;
+}
+
+.hotspot-range > input {
+    width: 90%;
+}
+
+.y-position {
+    margin-top: 1rem;
+}

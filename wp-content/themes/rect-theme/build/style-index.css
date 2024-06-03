@@ -327,16 +327,6 @@ font-weight: 400;
   color: #ddd;
 }
 
-/* .filter-container > form input[type=checkbox]:checked::before {
-  position: absolute;
-  padding: 4px;
-  color: white;
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  font-size: 10px;
-  content: '\f00c';
-} */
-
 .search-btn {
   background-color: #ddd;
   border: none;
@@ -368,7 +358,7 @@ font-weight: 400;
   width: 100%;
 }
 
-.expand-arrow > img {
+.expand-arrow {
   width: 30px;
   height: 30px;
   position: absolute;
