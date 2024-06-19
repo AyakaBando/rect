@@ -8,13 +8,21 @@ Template Post Type: project
 <?php
 get_header();
 
+$post_type = get_post_type( get_the_ID() );
+echo '<div class="project-page-title">';
+echo '<p>' . $post_type . '</p>';
+echo the_title(); 
+echo '</div>'
+?>
+
+
+<?php
 if (have_posts()) : 
     while (have_posts()) : 
         the_post(); 
 
         // Get the project name (slug)
         $project_name = sanitize_title(get_the_title());
-        print_r($project_name);
 
         // Display all attached images
         $images = get_attached_media('image', get_the_ID());

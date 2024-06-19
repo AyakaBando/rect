@@ -201,16 +201,24 @@ margin-top: 2rem;
 
 /* -------------------------- Projects -------------------------- */
 
+.project-page-title{
+  display:flex;
+  margin-left: 6rem;
+  position:absolute;
+  text-transform: uppercase;
+  gap: 5rem;
+}
+
 .project-custom-gallery {
   column-count: 2;
   gap: 3rem;
   grid-auto-flow: dense;
   margin-left: 10rem;
+  margin-top: 10rem;
 }
 
 .project-gallery-item {
   display: grid;
-
   grid-template-columns:1fr auto;
   grid-template-rows:1fr auto;
   margin-bottom: 3rem;
