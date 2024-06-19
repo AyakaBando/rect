@@ -96,6 +96,11 @@ function custom_scripts()
     wp_localize_script('custom-script', 'custom_vars', array(
         'ajax_url' => admin_url('admin-ajax.php'),
     ));
+
+    $image_id = get_query_var('image_id');
+    wp_localize_script('carousel-js', 'carouselData', array(
+        'immage_id' => $image_id
+    ));
 }
 add_action('wp_enqueue_scripts', 'custom_scripts');
 
@@ -136,22 +141,39 @@ function gallery_border_none($style)
     return str_replace('border: 2px solid #cfcfcf;', 'border: none;', $style);
 }
 
-// Code for themes
-add_action('after_switch_theme', 'flush_rewrite_rules');
-
-function custom_rewrite_rule()
-{
-    add_rewrite_rule('^project-details/([^/]*)/?', 'index.php?pagename=single-project-details&image_id=$matches[1]', 'top');
+// Add rewrite rules to handle custom URLs
+function custom_rewrite_rules() {
+    add_rewrite_rule('^projects/([^/]+)/([0-9]+)/?$', 'index.php?project_name=$matches[1]&image_id=$matches[2]', 'top');
 }
-add_action('init', 'custom_rewrite_rule');
+add_action('init', 'custom_rewrite_rules');
 
-// Flush rewrite rules on plugin/theme activation
-function custom_flush_rewrite_rules()
-{
-    custom_rewrite_rule(); // Add the rewrite rules
+// Add custom query variables
+function add_custom_query_vars($vars) {
+    $vars[] = 'project_name';
+    $vars[] = 'image_id';
+    return $vars;
+}
+add_filter('query_vars', 'add_custom_query_vars');
+
+// Redirect to custom template
+function load_custom_template($template) {
+    if (get_query_var('project_name') && get_query_var('image_id')) {
+        return locate_template('single-project-details.php');
+    }
+    return $template;
+}
+add_filter('template_include', 'load_custom_template');
+
+// Flush rewrite rules on theme activation
+function custom_flush_rewrite_rules() {
+    custom_rewrite_rules(); // Add the rewrite rules
     flush_rewrite_rules(); // Flush the rules once
 }
 register_activation_hook(__FILE__, 'custom_flush_rewrite_rules');
+
+// Flush rewrite rules after switching theme
+add_action('after_switch_theme', 'custom_flush_rewrite_rules');
+
 
 
 // Save JSON data

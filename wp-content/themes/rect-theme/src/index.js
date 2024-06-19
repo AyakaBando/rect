@@ -1,41 +1,46 @@
-// ------------------------------------------------------- Photos Filter by Tags -------------------------------------------------------
+// // ------------------------------------------------------- Photos Filter by Tags -------------------------------------------------------
 jQuery(document).ready(function ($) {
   $(".filter-button").on("click", function () {
     const selectedTag = $(this).data("tag");
     if (selectedTag === "all") {
-      $(".gallery-item").show(); // Show all images if 'All' tag is selected
+      $(".gallery-item").show();
     } else {
-      $(".gallery-item").hide(); // Hide all images initially
+      $(".gallery-item").hide();
       $(".gallery-item").each(function () {
         const tags = $(this).data("tags");
         if (tags.indexOf(selectedTag) !== -1) {
-          $(this).show(); // Show images with selected tag
+          $(this).show();
         }
       });
     }
   });
 });
 
-// ------------------------------------------------------- Functionality for carousel and hotspots -------------------------------------------------------
+// // ------------------------------------------------------- Functionality for carousel and hotspots -------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function () {
-  const carouselTrack = document.querySelector(".carousel-track");
   let currentIndex = 0;
   const slides = Array.from(document.querySelectorAll(".carousel-slide"));
   const productContainers = document.querySelectorAll(".product-container");
 
   function goToSlide(index) {
+      // Remove the active class from all slides
       slides.forEach((slide, i) => {
-          if (i === index) {
-              slide.classList.add("active");
-              slide.style.display = "block";
-              addHotspotsForImage(slide);
-              handleSlideChange(index);
-          } else {
+          if (i !== index) {
               slide.classList.remove("active");
               slide.style.display = "none";
           }
       });
+
+      // Add the active class to the current slide
+      const currentSlide = slides[index];
+      currentSlide.classList.add("active");
+      currentSlide.style.display = "block";
+
+      console.log("currentSlide", currentSlide)
+
       currentIndex = index;
+      handleSlideChange(index);
+      addHotspotsForImage(currentSlide);
   }
 
   function nextSlide() {
@@ -59,33 +64,39 @@ document.addEventListener("DOMContentLoaded", function () {
       prevButton.addEventListener("click", prevSlide);
   }
 
-  goToSlide(0);
+  // Get the initial image_id from PHP
+  const initialImageId = document.querySelector('.carousel').getAttribute('data-initial-image-id');
 
-  // ------------------------------------------------------- Carousel -------------------------------------------------------
+  // Find the index of the slide with initialImageId
+  const initialSlideIndex = slides.findIndex(slide => slide.getAttribute("data-image-id") === initialImageId);
+
+  // If initialImageId is found, go to that slide
+  if (initialSlideIndex !== -1) {
+      goToSlide(initialSlideIndex);
+  } else {
+      // Handle case when initialImageId doesn't match any slides
+      console.error("Initial image_id not found in slides.");
+      // Optionally, go to first slide as fallback
+      goToSlide(0);
+  }
+
   function handleSlideChange(currentSlideIndex) {
-    const currentSlide = slides[currentSlideIndex];
-    const currentSlideImageId = currentSlide.getAttribute("data-image-id");
+      const currentSlide = slides[currentSlideIndex];
+      const currentSlideImageId = currentSlide.getAttribute("data-image-id");
 
-    productContainers.forEach((productContainer) => {
-        const imageId = productContainer.getAttribute("data-image-id");
-        if (imageId === currentSlideImageId) {
-            productContainer.style.display = "flex";
-        } else {
-            productContainer.style.display = "none";
-        }
-    });
-}
+      productContainers.forEach(productContainer => {
+          const imageId = productContainer.getAttribute("data-image-id");
+          if (imageId === currentSlideImageId) {
+              productContainer.style.display = "flex";
+          } else {
+              productContainer.style.display = "none";
+          }
+      });
+  }
 
-slides.forEach((slide, index) => {
-    slide.addEventListener("transitionend", () => {
-        if (slide.classList.contains("active")) {
-            handleSlideChange(index);
-        }
-    });
-});
 
+  // // ------------------------------------------------------- Hotspots -------------------------------------------------------
   function addHotspotsForImage(slide) {
-    console.log(slide);
     const imageId = slide.getAttribute("data-image-id");
     const hotspotContainer = slide.querySelector(".image-hotspots-container");
 
@@ -105,35 +116,62 @@ slides.forEach((slide, index) => {
         hotspotContainer.appendChild(hotspotElement);
       });
 
-    hotspotContainer.addEventListener("mouseover", () => {
-      hotspotContainer.querySelectorAll(".hotspot").forEach((hotspot) => {
-        hotspot.style.display = "block";
+      hotspotContainer.addEventListener("mouseover", () => {
+        hotspotContainer.querySelectorAll(".hotspot").forEach((hotspot) => {
+          hotspot.style.display = "block";
+        });
       });
-    });
 
-     hotspotContainer.addEventListener("mouseout", () => {
-      hotspotContainer.querySelectorAll(".hotspot").forEach((hotspot) => {
-        hotspot.style.display = "none";
+      hotspotContainer.addEventListener("mouseout", () => {
+        hotspotContainer.querySelectorAll(".hotspot").forEach((hotspot) => {
+          hotspot.style.display = "none";
+        });
       });
-    });
     } else {
       console.warn(`Hotspot container not found for image ID: ${imageId}`);
     }
   }
-});
 
-window.addEventListener("load", () => {
-  const slides = document.querySelectorAll(".carousel-slide");
-  slides.forEach((slide, index) => {
-    const image = slide.querySelector("img");
-    if (image) {
-      image.addEventListener("load", () => {
-        if (slide.classList.contains("active")) {
-          addHotspotsForImage(slide);
-        }
-      });
+// // ------------------------------------------------------- Fullscreen functionality -------------------------------------------------------
+  let isFullscreen = false;
+
+  function toggleFullScreen(element) {
+    if (!document.fullscreenElement) {
+      element.requestFullscreen();
+      isFullscreen = true;
+    }
+  }
+
+  function exitFullScreen() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      isFullscreen = false;
+    }
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && isFullscreen) {
+      exitFullScreen();
     }
   });
+
+  slides.forEach((slide) => {
+    slide.addEventListener("click", () => {
+      if (isFullscreen) exitFullScreen();
+    });
+  });
+
+  const arrowExpandBtn = document.querySelector(".expand-arrow");
+  if (arrowExpandBtn) {
+    arrowExpandBtn.addEventListener("click", () => {
+      const activeSlideImg = document.querySelector(
+        ".carousel-slide.active img"
+      );
+      if (activeSlideImg) {
+        toggleFullScreen(activeSlideImg);
+      }
+    });
+  }
 });
 
 // ------------------------------------------------------- Projects grid layout change -------------------------------------------------------
@@ -172,50 +210,3 @@ function setupColumnIcons() {
 
 document.addEventListener("DOMContentLoaded", setupColumnIcons);
 
-// Fullscreen functionality
-document.addEventListener("DOMContentLoaded", () => {
-  const carousel = document.querySelector(".carousel");
-  const slides = document.querySelectorAll(".carousel-slide");
-
-  const fullscreenBtn = document.createElement("button");
-  fullscreenBtn.classList.add("fullscreen-btn");
-  fullscreenBtn.innerHTML = "Fullscreen";
-  let isFullscreen = false;
-
-  function toggleFullScreen(image) {
-    if (!document.fullscreenElement) {
-      image?.requestFullscreen();
-      isFullscreen = true;
-    }
-  }
-
-  function exitFullScreen() {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-      isFullscreen = false;
-    }
-  }
-
-  fullscreenBtn.addEventListener("click", () => {
-    toggleFullScreen(carousel.querySelector(".carousel-slide.active img"));
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && isFullscreen) {
-      exitFullScreen();
-    }
-  });
-
-  slides.forEach((slide) => {
-    slide.addEventListener("click", () => {
-      if (isFullscreen) exitFullScreen();
-    });
-  });
-
-  const arrowExpandBtn = document.querySelector(".expand-arrow");
-  if (arrowExpandBtn) {
-    arrowExpandBtn.addEventListener("click", (event) => {
-      toggleFullScreen(carousel.querySelector(".carousel-slide.active img"));
-    });
-  }
-});
