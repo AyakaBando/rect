@@ -42,8 +42,8 @@ if (have_posts()) :
             echo '写真が見つかりません。    ';
         }
 
-        // Display the post content (optional)
-        echo '<div class="content">';
+
+        echo '<div class="project-content">';
         the_content();
         echo '</div>';
 

@@ -6,16 +6,24 @@ Version: 1.0.0
 Text Domain: Options-plugin
 */
 
+function enqueue_hotspot_scripts()
+{
+    // Enqueue styles
+    wp_enqueue_style('hotspot-style', plugin_dir_url(__FILE__) . 'css/style.css');
+
+    // Enqueue scripts with dependencies on jQuery and WordPress media library
+    wp_enqueue_script('hotspot-script', plugin_dir_url(__FILE__) . 'js/hotspot-script.js', array('jquery', 'media-upload', 'thickbox'), null, true);
+    wp_enqueue_media();
+}
+add_action('admin_enqueue_scripts', 'enqueue_hotspot_scripts');
 
 
 function create_project_post_type()
 {
     $labels = array(
-        "name" => _x('Projects', 'Post type general name', "textdomain"),
+        "name" => _x('プロジェクト（仮）', 'Post type general name', "textdomain"),
         "singular_name" => _x('Project', 'Post type singular name', "textdomain"),
     );
-
-
 
     $args = array(
         "labels" => $labels,
@@ -24,7 +32,7 @@ function create_project_post_type()
         "show_ui" => true,
         "show_in_menu" => true,
         "query_var" => true,
-        "rewrite" => array('slug' => 'project'),
+        "rewrite" => array('slug' => 'projects'),
         "capability_type" => "post",
         "has_archive" => true,
         "hierarchical" => false,
@@ -43,100 +51,87 @@ add_action('init', 'create_project_post_type');
 function add_hotspot_meta_box()
 {
     add_meta_box(
-        "hotspot_meta_box",
-        "Hotspots",
-        "render_hotspot_meta_box",
-        "project",
-        "normal",
-        "high"
+        "hotspot_meta_box", // id
+        "ホットスポット", // title
+        "render_hotspot_meta_box", // function name
+        "project", // post type
+        "normal", // where the box should display
+        "high" // the priority where the box should show
     );
 }
 
 add_action('add_meta_boxes', 'add_hotspot_meta_box');
 
 
-
-function render_hotspot_meta_box($post)
-{
+function render_hotspot_meta_box($post) {
     $hotspots = get_post_meta($post->ID, '_hotspots', true);
-    $hotspots_image_url = get_post_meta($post->ID, "_hotspots_image_url", true);
-    $hotspots_image_id = get_post_meta($post->ID, "_hotspots_image_id", true);
-    $gallery_images = array();
-
-    $gallery = get_post_gallery($post, false);
-
-    if ($gallery) {
-        $gallery_images = explode(",", $gallery['ids']);
-    }
+    $hotspots_image_url = get_post_meta($post->ID, '_hotspots_image_url', true);
+    $hotspots_image_id = get_post_meta($post->ID, '_hotspots_image_id', true);
+    $attached_images = get_attached_media('image', $post->ID);
+    $initial_x_value = get_post_meta($post->ID, 'hotspot_x', true) ?: 50;
+    $initial_y_value = get_post_meta($post->ID, 'hotspot_y', true) ?: 50;
 
     wp_nonce_field('save_hotspot_data', 'hotspot_meta_box_nonce');
-
-?>
+    ?>
 
     <div id="hotspots-container">
-        <label for="hotspots-image">Select Project Image:</label>
+        <label for="hotspots-image-select">プロジェクト写真を選択:</label>
         <select id="hotspots-image-select" name="hotspots_image_id">
-            <?php foreach ($gallery_images as $image_id) :
+            <?php foreach ($attached_images as $image) : 
+                $image_id = $image->ID;
                 $image_url = wp_get_attachment_image_url($image_id, 'large');
             ?>
-
-                <option value="<?php echo $image_id; ?>" data-image-url="<?php echo esc_attr($image_url); ?>" <?php selected($hotspots_image_id, $image_id); ?>><?php echo esc_attr($image_url); ?></option>
+                <option value="<?php echo $image_id; ?>" data-image-url="<?php echo esc_attr($image_url); ?>" <?php selected($hotspots_image_id, $image_id); ?>>
+                    <?php echo esc_html($image_id); ?>
+                </option>
             <?php endforeach; ?>
         </select>
 
-        <div id="hotspot-interface">
-            <img id="hotspots-image" src="<?php echo esc_url($hotspots_image_url); ?>" style="max-width: 100%;" />
-        </div>
-
-    </div>
-
-    <div id="product-selector">
-        <button type="button" id="choose-product-button" class="button">Choose Product</button>
-        <div id="chosen-products">
-            <!-- Selected products will be displayed here -->
+        <div id="hotspot-interface" style="width: 460px; height: 296px;">
+            <img id="hotspots-image" src="<?php echo esc_url($hotspots_image_url); ?>" style="width: 100%; height: auto;" />
         </div>
     </div>
 
-    <div id="hotspot-positions">
-        <div>
-            <label for="hotspot-x">X Position:</label>
-            <input type="range" id="hotspot-x" name="hotspot_x" min="0" max="100" value="50">
-            <span class="range-value">50</span>%
+    <div id="hotspot-controls-container">
+        <div id="hotspot-controls">
+            <div id="product-selector">
+                <button type="button" id="choose-product-button" class="button">Choose Product</button>
+                <div id="chosen-products">
+                    <!-- Selected products will be displayed here -->
+                </div>
+            </div>
 
-        </div>
+            <div id="hotspot-positions">
+                <div>
+                    <label for="hotspot-x">X Position:</label>
+                    <input type="range" id="hotspot-x" class="hotspot-x" name="hotspot_x" min="0" max="100" value="<?php echo $initial_x_value; ?>">
+                    <span id="x-range-value" class="range-value"><?php echo $initial_x_value; ?></span>%
+                </div>
 
-        <div>
-            <label for="hotspot-y">Y Position:</label>
-            <input type="range" id="hotspot-y" name="hotspot_y" min="0" max="100">
-            <span class="range-value">50</span>%
+                <div>
+                    <label for="hotspot-y">Y Position:</label>
+                    <input type="range" id="hotspot-y" class="hotspot-y" name="hotspot_y" min="0" max="100" value="<?php echo $initial_y_value; ?>">
+                    <span id="y-range-value" class="range-value"><?php echo $initial_y_value; ?></span>%
+                </div>
+                <button type="button" id="add-hotspot" class="button button-primary">Add Hotspot</button>
+                <button type="button" id="delete-mode" class="button button-secondary">Toggle Delete Mode</button>
+                <button type="button" id="clear-all-data" class="button button-secondary">Clear All Data</button>
+                <div id="hotspot-json-display" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px; white-space: pre-wrap;"></div>
+                <button id="copy-json-button">Copy to Clipboard</button>
+            </div>
         </div>
-        <button type="button" id="add-hotspot" class="button button-primary">Add Hotspot</button>
     </div>
-    <button id="create-other-hotspots">Create Other Hotspots</button>
+
+    <button id="create-other-hotspots" class="button">Create Other Hotspots</button>
     <textarea name="hotspots" id="hotspots" rows="5" cols="30" style="display:none;"><?php echo esc_textarea($hotspots); ?></textarea>
 
-<?php
-
+    <?php
 }
-
-
-
-function enqueue_hotspots_scripts()
-{
-    wp_enqueue_style('hotspot-style', plugin_dir_url(__FILE__) . "css/style.css");
-    wp_enqueue_script('hotspot-script', plugin_dir_url(__FILE__) . 'js/hotspot-script.js', array('jquery'), null, true);
-    wp_enqueue_media();
-}
-
-add_action("admin_enqueue_scripts", "enqueue_hotspots_scripts");
 
 
 
 function save_hotspot_data($post_id)
 {
-    if (array_key_exists("hotspots", $_POST)) {
-        update_post_meta($post_id, '_hotspots', $_POST['hotspots']);
-    }
     if (!isset($_POST['hotspot_meta_box_nonce']) || !wp_verify_nonce($_POST['hotspot_meta_box_nonce'], 'save_hotspot_data')) {
         return;
     }
@@ -183,7 +178,7 @@ function display_hotspots($content)
             if (!empty($hotspots)) {
                 $hotspot_data = json_decode($hotspots, true);
                 foreach ($hotspot_data as $hotspot) {
-                    $content .= '<div class="hotspot" style="left:' . esc_attr($hotspot['x']) . '%; top:' . esc_attr($hotspot['y']) . '%;" data-info="' . esc_attr($hotspot['info']) . '" data-image="' . esc_url($hotspot['image']) . '"></div>';
+                    $content .= '<div class="hotspot" style="left:' . esc_attr($hotspot['x_position']) . '%; top:' . esc_attr($hotspot['y_position']) . '%;" data-info="' . esc_attr($hotspot['info']) . '" data-image="' . esc_url($hotspot['product_url']) . '"></div>';
                 }
             }
 

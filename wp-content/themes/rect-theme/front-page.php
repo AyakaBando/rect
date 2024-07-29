@@ -129,7 +129,7 @@
     </div>
     <div class="view-all-products">
         <a href="./products/">
-            View All Projects
+            View All Products
         </a>
     </div>
 

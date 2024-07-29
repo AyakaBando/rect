@@ -53,20 +53,13 @@ if ($custom_query->have_posts()) :
                                 foreach ($images_hotspots as $data) {
                                     if ($data['image'] == $img_id) {
                                         $hotspots = $data['hotspots'];
-                                        echo '<div class="image-hotspots-container" data-image-id="' . $img_id . '" data-hotspots=\'' . json_encode($hotspots) . '\'>';
-
-                                        // Output hotspots using plugin's hotspot interface
-                                        echo '<div id="hotspot-interface-' . $img_id . '" class="hotspot-interface">';
-                                        // You can customize how hotspots are displayed here
-                                        echo '</div>'; // Close hotspot interface div
-
-                                        echo '</div>'; // Close image-hotspots-container div
+                                        echo '<div class="image-hotspots-container" data-image-id="' . $img_id . '" data-hotspots=\'' . json_encode($hotspots) . '\'></div>';
                                         break;
                                     }
                                 }
                             }
 
-                            echo '</div>'; // Close carousel-slide div
+                            echo '</div>';
                         }
                     } else {
                         echo '<p>No images found for this project.</p>';
@@ -84,6 +77,7 @@ if ($custom_query->have_posts()) :
 
         <!-- Product Information -->
         <div class="single-project-images">
+            <div id="hotspot-interface" class="hotspot-interface"></div>
             <?php
             if ($images_hotspots) {
                 foreach ($images_hotspots as $data) {

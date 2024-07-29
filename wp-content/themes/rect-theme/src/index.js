@@ -16,6 +16,9 @@ jQuery(document).ready(function ($) {
   });
 });
 
+// ------------------------------------------------------- Masonry Layout -------------------------------------------------------
+
+
 // // ------------------------------------------------------- Functionality for carousel and hotspots -------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function () {
   let currentIndex = 0;
